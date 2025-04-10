@@ -11,7 +11,7 @@ services:
       - "8088:8088"
     command: >
       /bin/sh -c "
-        pip install trino psycopg2-binary pymssql mysqlclient &&
+        pip install trino psycopg2-binary pymssql PyMySQL &&
         superset db upgrade &&
         superset fab create-admin --username admin --firstname Superset --lastname Admin --email admin@superset.com --password admin &&
         superset init &&
