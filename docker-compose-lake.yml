@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  superset:
+    image: apache/superset
+    container_name: superset
+    networks:
+      iceberg_net:
+    environment:
+      - SUPERSET_LOAD_EXAMPLES=yes
+      - SUPERSET_SECRET_KEY=superset_secret
+    ports:
+      - "8088:8088"
+    command: >
+      /bin/sh -c "
+        pip install trino psycopg2-binary pymssql mysqlclient &&
+        superset db upgrade &&
+        superset fab create-admin --username admin --firstname Superset --lastname Admin --email admin@superset.com --password admin &&
+        superset init &&
+        superset run -h 0.0.0.0 -p 8088
+      "
+    volumes:
+      - ./ptit/favicon.png:/app/superset/static/assets/images/favicon.png
+      - ./ptit/superset-logo-horiz.png:/app/superset/static/assets/images/superset-logo-horiz.png
+      - ./ptit/superset.png:/app/superset/static/assets/images/superset.png
