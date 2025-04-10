@@ -4,8 +4,6 @@ services:
   superset:
     image: apache/superset
     container_name: superset
-    networks:
-      iceberg_net:
     environment:
       - SUPERSET_LOAD_EXAMPLES=yes
       - SUPERSET_SECRET_KEY=superset_secret
